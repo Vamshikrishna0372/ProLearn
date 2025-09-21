@@ -84,13 +84,11 @@ export default function AdminPanel() {
   const handleInputChange = (e, index = null, field = null) => {
     const { name, value, type, checked } = e.target;
 
-    // checkbox for active
     if (name === "active") {
       setForm((f) => ({ ...f, active: checked }));
       return;
     }
 
-    // video fields when index & field provided
     if (index !== null && field) {
       const updatedVideos = Array.isArray(form.videos) ? [...form.videos] : [{ title: "", url: "" }];
       updatedVideos[index] = { ...updatedVideos[index], [field]: value };
@@ -98,7 +96,6 @@ export default function AdminPanel() {
       return;
     }
 
-    // number input conversion
     if (type === "number") {
       setForm((f) => ({ ...f, [name]: value === "" ? "" : Number(value) }));
     } else {
@@ -131,7 +128,6 @@ export default function AdminPanel() {
       duration: "",
     });
 
-  // Add or Update Course
   const handleAddCourseSubmit = async (e) => {
     e.preventDefault();
     if (!form.title.trim() || !form.instructor.trim()) {
@@ -141,7 +137,6 @@ export default function AdminPanel() {
 
     try {
       if (editCourseId) {
-        // Update course
         const res = await fetch(`https://prolearn-backend-5uot.onrender.com/api/courses/${editCourseId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -158,7 +153,6 @@ export default function AdminPanel() {
           toast.error(data.message || "Failed to update course");
         }
       } else {
-        // Add new course
         const res = await fetch("https://prolearn-backend-5uot.onrender.com/api/courses", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -180,9 +174,7 @@ export default function AdminPanel() {
     }
   };
 
-  // Delete course (toast-confirm)
   const handleDeleteCourse = (id) => {
-    // create toast with Yes/No buttons
     let toastId = toast(
       () => (
         <div style={{ padding: "6px 2px" }}>
@@ -228,9 +220,7 @@ export default function AdminPanel() {
     );
   };
 
-  // Edit course
   const handleEditCourse = (course) => {
-    // build a safe form object (omit _id, createdAt, updatedAt)
     const safeForm = {
       title: course.title || "",
       description: course.description || "",
@@ -250,7 +240,6 @@ export default function AdminPanel() {
     if (isMobile) setSidebarOpen(false);
   };
 
-  // Render dynamic sections
   const renderSection = () => {
     switch (activeSection) {
       case "courses":
@@ -483,7 +472,6 @@ export default function AdminPanel() {
 
   return (
     <div className="admin-panel">
-      {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           <h2 className="logo">Admin Panel</h2>
@@ -534,7 +522,6 @@ export default function AdminPanel() {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="main-content">
         <header className="main-header">
           <button className="menu-toggle" onClick={toggleSidebar} aria-label="Toggle menu">
