@@ -22,7 +22,9 @@ export default function CoursePage() {
     const fetchUser = async () => {
       try {
         if (userId) {
-          const res = await fetch(`https://prolearn-backend-5uot.onrender.com/api/auth/${userId}`);
+          const res = await fetch(
+            `https://prolearn-backend-5uot.onrender.com/api/auth/${userId}`
+          );
           const data = await res.json();
           if (data.success && data.user) {
             setUserName(data.user.name || "Student");
@@ -39,7 +41,9 @@ export default function CoursePage() {
   useEffect(() => {
     const fetchCourseAndProgress = async () => {
       try {
-        const res = await fetch(`https://prolearn-backend-5uot.onrender.com/api/courses/${id}`);
+        const res = await fetch(
+          `https://prolearn-backend-5uot.onrender.com/api/courses/${id}`
+        );
         const data = await res.json();
         if (data.success) setCourse(data.course);
 
@@ -130,7 +134,7 @@ export default function CoursePage() {
     const endDate = course.endDate
       ? new Date(course.endDate).toLocaleDateString()
       : issueDate;
-    const totalHours = course.totalHours || "N/A";
+    const totalHours = course.totalHours || course.duration || "N/A";
     const instructorName = course.instructor || "Course Instructor";
     const description =
       course.description ||
@@ -141,7 +145,7 @@ export default function CoursePage() {
     doc.setLineWidth(6);
     doc.rect(15, 15, pageWidth - 30, pageHeight - 30);
 
-    // Title (FIXED)
+    // Title
     doc.setFontSize(32);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(30, 30, 120);
@@ -252,6 +256,26 @@ export default function CoursePage() {
         </button>
       </header>
 
+      {/* Course Details */}
+      <div className="course-details">
+        <p><strong>Instructor:</strong> {course.instructor}</p>
+        <p><strong>Description:</strong> {course.description}</p>
+        <p><strong>Category:</strong> {course.category}</p>
+        <p><strong>Level:</strong> {course.level}</p>
+        
+        <p><strong>Duration:</strong> {course.totalHours || course.duration}</p>
+        <p><strong>Price:</strong> {course.price}</p>
+        <p><strong>Rating:</strong> {course.rating}</p>
+        {course.thumbnail && (
+          <img
+            src={course.thumbnail}
+            alt="Course Thumbnail"
+            className="course-thumbnail"
+          />
+        )}
+      </div>
+
+      {/* Video Playlist */}
       {course.videos && course.videos.length > 0 && (
         <div className="video-playlist">
           <h3>Course Videos</h3>

@@ -409,3 +409,58 @@
   background: #d9534f;
   color: #fff;
 }
+/* Course Metadata Styling with Interactivity */
+.course-details {
+  margin-bottom: 25px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.course-details:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+/* Individual field styling */
+.course-details p {
+  margin: 8px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: default;
+}
+
+.course-details p:hover {
+  background-color: #e6f0ff; /* subtle highlight on hover */
+  color: #005fcc;
+}
+
+/* Labels */
+.course-details p strong {
+  display: inline-block;
+  width: 120px; /* fixed width for labels */
+  color: #0077ff; /* label color */
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Thumbnail */
+.course-details img.course-thumbnail {
+  display: block;
+  margin-top: 15px;
+  max-width: 250px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.course-details img.course-thumbnail:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
