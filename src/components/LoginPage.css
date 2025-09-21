@@ -1,0 +1,247 @@
+/* -------- Global Layout -------- */
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #f0f2f5;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode background */
+body.dark-mode {
+  background: #121212;
+}
+
+/* -------- Main Layout -------- */
+.login-page {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-color, #f8f9fc);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode for container */
+.login-page.dark {
+  --bg-color: #1c1c1c;
+}
+
+/* -------- Dark Mode Toggle -------- */
+.mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #4e73df;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+.mode-toggle:hover {
+  background: #3753c7;
+  transform: scale(1.05);
+}
+
+/* -------- Left Side -------- */
+.login-left {
+  flex: 1;
+  background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+.left-content {
+  max-width: 450px;
+}
+.login-left h1 {
+  font-size: 2.7rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  animation: fadeDown 0.7s ease-in-out;
+}
+.login-left h1 span {
+  color: #ffe066;
+}
+.login-left p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+.login-left img {
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+}
+.login-left img:hover {
+  transform: scale(1.03);
+}
+.explore-btn {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  background: #ffe066;
+  color: #224abe;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.explore-btn:hover {
+  background: #ffdf55;
+  transform: translateY(-2px);
+}
+
+/* -------- Right Side -------- */
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  padding: 2rem;
+  transition: background 0.3s ease;
+}
+.login-page.dark .login-right {
+  background: #222;
+}
+
+.form-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: fadeUp 0.6s ease-out;
+  transition: background 0.3s ease;
+}
+.login-page.dark .form-box {
+  background: #2b2b2b;
+}
+@keyframes fadeUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+@keyframes fadeDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.form-box h2 {
+  font-size: 1.9rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+.login-page.dark .form-box h2 {
+  color: #f1f1f1;
+}
+.form-box p {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+.login-page.dark .form-box p {
+  color: #bbb;
+}
+
+/* -------- Inputs -------- */
+.form-box input,
+.signup-fields select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  background: #fafafa;
+  transition: border 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+.form-box input:focus,
+.signup-fields select:focus {
+  border-color: #4e73df;
+  box-shadow: 0 0 0 2px rgba(78, 115, 223, 0.25);
+}
+.login-page.dark .form-box input,
+.login-page.dark .signup-fields select {
+  background: #3a3a3a;
+  color: #eee;
+  border-color: #555;
+}
+
+/* -------- Button -------- */
+.form-box button {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #4e73df;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+.form-box button:hover {
+  background: #3753c7;
+  transform: translateY(-1px);
+}
+
+/* -------- Toggle Text -------- */
+.toggle-text {
+  margin-top: 1rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+.login-page.dark .toggle-text {
+  color: #ccc;
+}
+.toggle-text span {
+  color: #4e73df;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.toggle-text span:hover {
+  text-decoration: underline;
+  color: #3753c7;
+}
+
+/* -------- Signup Grid -------- */
+.signup-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+/* -------- Responsive -------- */
+@media (max-width: 900px) {
+  .login-page {
+    flex-direction: column;
+  }
+  .login-left,
+  .login-right {
+    width: 100%;
+    padding: 2rem;
+  }
+  .left-content {
+    text-align: center;
+  }
+  .signup-fields {
+    grid-template-columns: 1fr;
+  }
+}

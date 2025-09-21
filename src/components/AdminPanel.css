@@ -1,0 +1,397 @@
+:root {
+  --primary: #4f46e5;        /* Indigo */
+  --secondary: #9333ea;      /* Purple */
+  --accent: #facc15;         /* Yellow */
+  --bg-light: #f3f4f6;       /* Page background */
+  --text-light: #fff;
+  --text-dark: #1f2937;
+  --transition: 0.3s ease;
+  --sidebar-width: 240px;
+  --radius: 12px;
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- Global ---------- */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+.admin-panel {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  color: var(--text-light);
+  width: var(--sidebar-width);
+  padding: 1rem;
+  position: relative;
+  transform: translateX(0);
+  transition: transform var(--transition);
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+}
+.sidebar:not(.open) {
+  transform: translateX(-100%);
+}
+
+/* Sidebar header */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.menu-btn {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: transform var(--transition);
+}
+.menu-btn:hover { transform: rotate(90deg) scale(1.15); }
+
+/* Nav */
+.nav-links { display: flex; flex-direction: column; gap: 1rem; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  text-align: left;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+}
+.nav-item:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateX(6px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+.nav-item.active {
+  background: rgba(0,0,0,0.12);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.nav-icon { font-size: 1.2rem; }
+
+/* Sidebar footer */
+.sidebar-footer {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.logout-btn {
+  background: var(--accent);
+  border: none;
+  color: var(--text-dark);
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+}
+.logout-btn:hover {
+  background: #eab308;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ---------- Main Content ---------- */
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  transition: margin-left var(--transition);
+}
+.main-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.main-header h1 { margin: 0; font-weight: 700; color: var(--primary); }
+
+/* Header logout (always visible, good for mobile) */
+.header-logout {
+  background: transparent;
+  border: none;
+  color: var(--text-dark);
+  font-size: 1.15rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.header-logout:hover { background: rgba(0,0,0,0.06); transform: scale(1.05); }
+
+/* menu toggle */
+.menu-toggle {
+  background: var(--primary);
+  border: none;
+  color: var(--text-light);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background var(--transition), transform var(--transition);
+}
+.menu-toggle:hover { background: var(--secondary); transform: scale(1.05); }
+
+/* content box */
+.content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.45s ease;
+}
+
+/* ---------- Courses grid (list view) ---------- */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.course-card {
+  display: flex;
+  gap: 0.8rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.9));
+  border-radius: 10px;
+  padding: 0.6rem;
+  align-items: center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.course-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+.course-thumb {
+  width: 90px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.course-info h3 { margin: 0; font-size: 1rem; }
+.muted { color: #6b7280; font-size: 0.95rem; }
+
+/* placeholder small card */
+.placeholder-card {
+  margin-top: 1rem;
+  padding: 1.2rem;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fff, #fafafa);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  color: #374151;
+}
+
+/* ---------- Add Course Form ---------- */
+.course-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.course-form h2 { margin: 0; color: var(--primary); }
+.course-form label { display: flex; flex-direction: column; gap: 0.4rem; font-weight: 600; }
+.course-form input, .course-form textarea, .course-form select {
+  padding: 0.65rem;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  font-size: 0.95rem;
+  background: #fbfdff;
+  transition: border var(--transition), box-shadow var(--transition);
+}
+.course-form input:focus, .course-form textarea:focus, .course-form select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(79,70,229,0.08);
+}
+
+/* two-column rows */
+.row-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* form actions */
+.form-actions { display: flex; gap: 1rem; margin-top: 0.25rem; }
+.submit-btn {
+  background: var(--primary);
+  color: var(--text-light);
+  padding: 0.8rem 1.25rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform var(--transition), background var(--transition);
+}
+.submit-btn:hover { background: var(--secondary); transform: translateY(-3px); }
+.cancel-btn {
+  background: #f3f4f6;
+  color: var(--text-dark);
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cancel-btn:hover { transform: translateY(-2px); }
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 992px) {
+  .row-two { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .sidebar { position: fixed; top: 0; left: 0; z-index: 1200; height: 100vh; }
+  .main-content { padding: 1rem; }
+  .course-thumb { width: 84px; height: 64px; }
+}
+/* ========== BUTTON STYLES ONLY ========== */
+
+/* base button reset */
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+/* subtle press effect */
+button:active {
+  transform: translateY(1px) scale(0.998);
+}
+
+/* Logout (sidebar footer) and header logout */
+.logout-btn,
+.header-logout {
+  background: #dc3545;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 8px;
+}
+.logout-btn:hover,
+.header-logout:hover {
+  background: #b02a37;
+  box-shadow: 0 6px 16px rgba(176, 42, 55, 0.12);
+}
+
+/* Course action buttons container */
+.course-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Edit button (yellow) */
+.edit-btn {
+  background: #ffc107;
+  color: #111;
+  padding: 6px 10px;
+  border-radius: 6px;
+  min-width: 40px;
+}
+.edit-btn:hover {
+  background: #e0a800;
+  box-shadow: 0 6px 14px rgba(224, 168, 0, 0.12);
+}
+
+/* Delete button (red) */
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  min-width: 40px;
+}
+.delete-btn:hover {
+  background: #b02a37;
+  box-shadow: 0 6px 14px rgba(176, 42, 55, 0.12);
+}
+
+/* Submit button (green) */
+.submit-btn {
+  background: #28a745;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+.submit-btn:hover {
+  background: #218838;
+  box-shadow: 0 8px 20px rgba(33, 136, 56, 0.12);
+}
+
+/* Cancel button (gray) */
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+.cancel-btn:hover {
+  background: #5a6268;
+  box-shadow: 0 6px 14px rgba(90, 98, 104, 0.08);
+}
+
+/* Add video / Remove video */
+.add-video-btn,
+.remove-video-btn {
+  background: transparent;
+  color: #007bff;
+  border: 1px dashed rgba(0, 123, 255, 0.25);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.add-video-btn:hover,
+.remove-video-btn:hover {
+  background: rgba(0, 123, 255, 0.06);
+}
+
+/* Confirm button used inside toast confirm */
+.confirm-btn {
+  background: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+.confirm-btn:hover {
+  background: #0056b3;
+  box-shadow: 0 6px 12px rgba(0, 86, 179, 0.12);
+}
+
+/* Make sure toast buttons inherit visual style */
+.Toastify__toast-body button {
+  font-weight: 600;
+}

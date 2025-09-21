@@ -1,0 +1,226 @@
+.pl-profile-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.pl-header-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pl-back-button,
+.pl-logout-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f7f9fc;
+  border: none;
+  color: #333;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.pl-back-button:hover,
+.pl-logout-button:hover {
+  background: #e4e9f0;
+}
+
+.pl-profile-avatar-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pl-profile-avatar {
+  font-size: 140px;
+  color: #4a4a4a;
+}
+
+.pl-profile-name {
+  margin: 12px 0 5px 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #222;
+}
+
+.pl-profile-email {
+  font-size: 15px;
+  color: #666;
+}
+
+.pl-profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.pl-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 18px;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  transition: 0.2s;
+}
+
+.pl-profile-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.pl-icon {
+  font-size: 24px;
+  color: #007bff;
+}
+
+.pl-profile-card h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.pl-profile-card p {
+  margin: 3px 0 0;
+  font-size: 15px;
+  color: #555;
+}
+
+/* Tabs */
+.pl-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.pl-tabs button {
+  background: #f7f9fc;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.pl-tabs button.active {
+  background: #007bff;
+  color: #fff;
+}
+
+.pl-tabs button:hover:not(.active) {
+  background: #e4e9f0;
+}
+
+.pl-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Courses, Certificates, Badges */
+.pl-courses-grid,
+.pl-certificates-grid,
+.pl-badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pl-course,
+.pl-certificate,
+.pl-badge {
+  background: #f0f8ff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #cce7ff;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: #0056b3;
+  transition: 0.2s;
+}
+
+.pl-course:hover,
+.pl-certificate:hover,
+.pl-badge:hover {
+  background: #e1f0ff;
+  transform: translateY(-2px);
+}
+
+.pl-certificate-icon,
+.pl-badge-icon {
+  font-size: 16px;
+}
+
+.pl-download-btn {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  color: #555;
+}
+
+.loading-spinner {
+  font-size: 32px;
+  margin-bottom: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.no-profile {
+  text-align: center;
+  font-size: 16px;
+  color: #888;
+}
+.mark-btn {
+  display: block;
+              /* same width as video */
+  width: 650px;         /* keep it balanced */
+       /* center under video */
+  padding: 14px 0;
+  font-size: 14px;
+  font-weight: 600;
+
+  background: #007bff;      /* blue color */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.mark-btn:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.mark-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
