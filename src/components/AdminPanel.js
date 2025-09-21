@@ -184,7 +184,7 @@ export default function AdminPanel() {
   const handleDeleteCourse = (id) => {
     // create toast with Yes/No buttons
     let toastId = toast(
-      ({}) => (
+      () => (
         <div style={{ padding: "6px 2px" }}>
           <div style={{ marginBottom: 8 }}>🗑️ Are you sure you want to delete this course?</div>
           <div style={{ display: "flex", gap: 8 }}>
