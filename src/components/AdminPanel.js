@@ -47,9 +47,7 @@ export default function AdminPanel() {
 
   const fetchCourses = async () => {
     try {
-      const res = await fetch(
-        "https://prolearn-backend-5uot.onrender.com/api/courses"
-      );
+      const res = await fetch("https://prolearn-backend-5uot.onrender.com/api/courses");
       const data = await res.json();
       if (data.success) setCourses(data.courses);
       else setCourses([]);
@@ -92,9 +90,7 @@ export default function AdminPanel() {
     }
 
     if (index !== null && field) {
-      const updatedVideos = Array.isArray(form.videos)
-        ? [...form.videos]
-        : [{ title: "", url: "" }];
+      const updatedVideos = Array.isArray(form.videos) ? [...form.videos] : [{ title: "", url: "" }];
       updatedVideos[index] = { ...updatedVideos[index], [field]: value };
       setForm((f) => ({ ...f, videos: updatedVideos }));
       return;
@@ -108,19 +104,13 @@ export default function AdminPanel() {
   };
 
   const handleAddVideo = () => {
-    setForm((f) => ({
-      ...f,
-      videos: [...(f.videos || []), { title: "", url: "" }],
-    }));
+    setForm((f) => ({ ...f, videos: [...(f.videos || []), { title: "", url: "" }] }));
   };
 
   const handleRemoveVideo = (index) => {
     const updatedVideos = [...(form.videos || [])];
     updatedVideos.splice(index, 1);
-    setForm((f) => ({
-      ...f,
-      videos: updatedVideos.length ? updatedVideos : [{ title: "", url: "" }],
-    }));
+    setForm((f) => ({ ...f, videos: updatedVideos.length ? updatedVideos : [{ title: "", url: "" }] }));
   };
 
   const resetForm = () =>
@@ -141,27 +131,20 @@ export default function AdminPanel() {
   const handleAddCourseSubmit = async (e) => {
     e.preventDefault();
     if (!form.title.trim() || !form.instructor.trim()) {
-      toast.error("Title and Instructor are required", {
-        position: "top-center",
-      });
+      toast.error("Title and Instructor are required", { position: "top-center" });
       return;
     }
 
     try {
       if (editCourseId) {
-        const res = await fetch(
-          `https://prolearn-backend-5uot.onrender.com/api/courses/${editCourseId}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(form),
-          }
-        );
+        const res = await fetch(`https://prolearn-backend-5uot.onrender.com/api/courses/${editCourseId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
         const data = await res.json();
         if (data.success) {
-          toast.success("✏️ Course updated successfully", {
-            position: "top-center",
-          });
+          toast.success("✏️ Course updated successfully", { position: "top-center" });
           fetchCourses();
           resetForm();
           setEditCourseId(null);
@@ -170,19 +153,14 @@ export default function AdminPanel() {
           toast.error(data.message || "Failed to update course");
         }
       } else {
-        const res = await fetch(
-          "https://prolearn-backend-5uot.onrender.com/api/courses",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(form),
-          }
-        );
+        const res = await fetch("https://prolearn-backend-5uot.onrender.com/api/courses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
         const data = await res.json();
         if (data.success) {
-          toast.success("🎉 Course added successfully", {
-            position: "top-center",
-          });
+          toast.success("🎉 Course added successfully", { position: "top-center" });
           fetchCourses();
           resetForm();
           setActiveSection("courses");
@@ -200,25 +178,18 @@ export default function AdminPanel() {
     let toastId = toast(
       () => (
         <div style={{ padding: "6px 2px" }}>
-          <div style={{ marginBottom: 8 }}>
-            🗑️ Are you sure you want to delete this course?
-          </div>
+          <div style={{ marginBottom: 8 }}>🗑️ Are you sure you want to delete this course?</div>
           <div style={{ display: "flex", gap: 8 }}>
             <button
               className="confirm-btn"
               onClick={async () => {
                 try {
-                  const res = await fetch(
-                    `https://prolearn-backend-5uot.onrender.com/api/courses/${id}`,
-                    {
-                      method: "DELETE",
-                    }
-                  );
+                  const res = await fetch(`https://prolearn-backend-5uot.onrender.com/api/courses/${id}`, {
+                    method: "DELETE",
+                  });
                   const data = await res.json();
                   if (data.success) {
-                    toast.success("✅ Course deleted successfully", {
-                      position: "top-center",
-                    });
+                    toast.success("✅ Course deleted successfully", { position: "top-center" });
                     setCourses((c) => c.filter((course) => course._id !== id));
                   } else {
                     toast.error(data.message || "Failed to delete course");
@@ -257,10 +228,7 @@ export default function AdminPanel() {
       level: course.level || "Beginner",
       thumbnail: course.thumbnail || "",
       instructor: course.instructor || "",
-      videos:
-        Array.isArray(course.videos) && course.videos.length
-          ? course.videos
-          : [{ title: "", url: "" }],
+      videos: Array.isArray(course.videos) && course.videos.length ? course.videos : [{ title: "", url: "" }],
       price: course.price || "Free",
       active: typeof course.active === "boolean" ? course.active : true,
       rating: course.rating || 0,
@@ -283,10 +251,7 @@ export default function AdminPanel() {
                 <div className="course-card" key={c._id}>
                   <img
                     className="course-thumb"
-                    src={
-                      c.thumbnail ||
-                      "https://via.placeholder.com/240x135?text=No+Image"
-                    }
+                    src={c.thumbnail || "https://via.placeholder.com/240x135?text=No+Image"}
                     alt={c.title}
                   />
                   <div className="course-info">
@@ -297,9 +262,7 @@ export default function AdminPanel() {
                     <p className="muted">
                       {c.category} • {c.price} • Rating: {c.rating}
                     </p>
-                    <p className="muted">
-                      Status: {c.active ? "Active" : "Inactive"}
-                    </p>
+                    <p className="muted">Status: {c.active ? "Active" : "Inactive"}</p>
                     <div className="course-actions">
                       <button
                         className="edit-btn"
@@ -449,20 +412,12 @@ export default function AdminPanel() {
                     onChange={(e) => handleInputChange(e, index, "url")}
                     placeholder="Video URL"
                   />
-                  <button
-                    type="button"
-                    className="remove-video-btn"
-                    onClick={() => handleRemoveVideo(index)}
-                  >
+                  <button type="button" className="remove-video-btn" onClick={() => handleRemoveVideo(index)}>
                     Remove
                   </button>
                 </div>
               ))}
-              <button
-                type="button"
-                onClick={handleAddVideo}
-                className="add-video-btn"
-              >
+              <button type="button" onClick={handleAddVideo} className="add-video-btn">
                 + Add Video
               </button>
             </div>
@@ -490,12 +445,8 @@ export default function AdminPanel() {
         return (
           <div>
             <h2>Students Information</h2>
-            <p className="muted">
-              List and manage students here (placeholder).
-            </p>
-            <div className="placeholder-card">
-              Student dashboard coming soon.
-            </div>
+            <p className="muted">List and manage students here (placeholder).</p>
+            <div className="placeholder-card">Student dashboard coming soon.</div>
           </div>
         );
 
@@ -503,12 +454,8 @@ export default function AdminPanel() {
         return (
           <div>
             <h2>Announcements</h2>
-            <p className="muted">
-              Create and broadcast announcements to learners.
-            </p>
-            <div className="placeholder-card">
-              Announcements manager coming soon.
-            </div>
+            <p className="muted">Create and broadcast announcements to learners.</p>
+            <div className="placeholder-card">Announcements manager coming soon.</div>
           </div>
         );
 
@@ -516,12 +463,8 @@ export default function AdminPanel() {
         return (
           <div>
             <h2>Admin Home</h2>
-            <p className="muted">
-              Select a menu item to start managing ProLearn.
-            </p>
-            <div className="placeholder-card">
-              Quick overview and recent activity go here.
-            </div>
+            <p className="muted">Select a menu item to start managing ProLearn.</p>
+            <div className="placeholder-card">Quick overview and recent activity go here.</div>
           </div>
         );
     }
@@ -532,20 +475,14 @@ export default function AdminPanel() {
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           <h2 className="logo">Admin Panel</h2>
-          <button
-            className="menu-btn"
-            onClick={toggleSidebar}
-            aria-label="Toggle menu"
-          >
+          <button className="menu-btn" onClick={toggleSidebar} aria-label="Toggle menu">
             <FaBars />
           </button>
         </div>
 
         <nav className="nav-links">
           <button
-            className={`nav-item ${
-              activeSection === "courses" ? "active" : ""
-            }`}
+            className={`nav-item ${activeSection === "courses" ? "active" : ""}`}
             onClick={() => handleNavClick("courses")}
           >
             <FaBook className="nav-icon" />
@@ -553,9 +490,7 @@ export default function AdminPanel() {
           </button>
 
           <button
-            className={`nav-item ${
-              activeSection === "add-course" ? "active" : ""
-            }`}
+            className={`nav-item ${activeSection === "add-course" ? "active" : ""}`}
             onClick={() => handleNavClick("add-course")}
           >
             <FaPlusCircle className="nav-icon" />
@@ -563,9 +498,7 @@ export default function AdminPanel() {
           </button>
 
           <button
-            className={`nav-item ${
-              activeSection === "students" ? "active" : ""
-            }`}
+            className={`nav-item ${activeSection === "students" ? "active" : ""}`}
             onClick={() => handleNavClick("students")}
           >
             <FaUsers className="nav-icon" />
@@ -573,9 +506,7 @@ export default function AdminPanel() {
           </button>
 
           <button
-            className={`nav-item ${
-              activeSection === "announcements" ? "active" : ""
-            }`}
+            className={`nav-item ${activeSection === "announcements" ? "active" : ""}`}
             onClick={() => handleNavClick("announcements")}
           >
             <FaBullhorn className="nav-icon" />
@@ -593,20 +524,12 @@ export default function AdminPanel() {
 
       <main className="main-content">
         <header className="main-header">
-          <button
-            className="menu-toggle"
-            onClick={toggleSidebar}
-            aria-label="Toggle menu"
-          >
+          <button className="menu-toggle" onClick={toggleSidebar} aria-label="Toggle menu">
             <FaBars />
           </button>
           <h1>Welcome, Admin!</h1>
           <div style={{ marginLeft: "auto" }}>
-            <button
-              className="header-logout"
-              onClick={handleLogout}
-              title="Logout"
-            >
+            <button className="header-logout" onClick={handleLogout} title="Logout">
               <FaSignOutAlt />
             </button>
           </div>
@@ -615,13 +538,7 @@ export default function AdminPanel() {
         <section className="content">{renderSection()}</section>
       </main>
 
-      <ToastContainer
-        transition={Zoom}
-        autoClose={2500}
-        pauseOnHover
-        closeOnClick
-        draggable
-      />
+      <ToastContainer transition={Zoom} autoClose={2500} pauseOnHover closeOnClick draggable />
     </div>
   );
 }

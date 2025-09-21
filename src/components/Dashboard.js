@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   FaUserCircle,
   FaSignOutAlt,
@@ -32,23 +32,24 @@ export default function Dashboard() {
     localStorage.getItem("theme") === "dark"
   );
 
-  // 🔹 pagination states for "Show More"
   const [visibleMyCourses, setVisibleMyCourses] = useState(4);
   const [visibleAllCourses, setVisibleAllCourses] = useState(4);
 
   const navigate = useNavigate();
   const location = useLocation();
+  const allCoursesRef = useRef(null);
 
   const localUser = JSON.parse(localStorage.getItem("user") || "{}");
   const userId = localUser._id;
 
-  // 🔹 Fetch user info from DB
+  // Fetch user info
   useEffect(() => {
     const fetchUser = async () => {
       try {
         if (!userId) return;
-
-        const res = await axios.get(`https://prolearn-backend-5uot.onrender.com/api/auth/${userId}`);
+        const res = await axios.get(
+          `https://prolearn-backend-5uot.onrender.com/api/auth/${userId}`
+        );
         if (res.data.success && res.data.user) {
           setUserName(res.data.user.name || res.data.user.fullName || "Student");
           setAvatar(
@@ -63,7 +64,7 @@ export default function Dashboard() {
     fetchUser();
   }, [userId]);
 
-  // 🔹 Apply theme
+  // Dark mode
   useEffect(() => {
     const root = document.documentElement;
     if (darkMode) {
@@ -75,11 +76,13 @@ export default function Dashboard() {
     }
   }, [darkMode]);
 
-  // 🔹 Fetch courses
+  // Fetch courses
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch("https://prolearn-backend-5uot.onrender.com/api/courses");
+        const res = await fetch(
+          "https://prolearn-backend-5uot.onrender.com/api/courses"
+        );
         const data = await res.json();
         if (data.success) {
           const coursesWithProgress = await Promise.all(
@@ -112,7 +115,16 @@ export default function Dashboard() {
     fetchCourses();
   }, [userId]);
 
-  // 🔹 View toggles
+  // Handle search Enter key
+  const handleSearchKeyPress = (e) => {
+    if (e.key === "Enter") {
+      if (allCoursesRef.current) {
+        allCoursesRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
+  // View toggles
   const goToMyCoursesView = () => {
     setView("myCourses");
     setMenuOpen(false);
@@ -130,7 +142,7 @@ export default function Dashboard() {
   };
   const goBackToMain = () => setView("main");
 
-  // 🔹 Enroll/start course
+  // Start course
   const startCourse = (course) => {
     setMyCourses((prev) => [...prev, { ...course }]);
     setAllCourses((prev) => prev.filter((c) => c._id !== course._id));
@@ -142,7 +154,7 @@ export default function Dashboard() {
     setMenuOpen(false);
   };
 
-  // 🔹 Filtered courses
+  // Filter courses
   const filteredMyCourses = myCourses.filter((c) =>
     c.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -169,6 +181,7 @@ export default function Dashboard() {
           <h1 className="pl-logo">ProLearn</h1>
         </div>
 
+        {/* Search bar */}
         <div className="pl-header-center">
           <input
             type="text"
@@ -176,6 +189,7 @@ export default function Dashboard() {
             className="pl-search-bar"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleSearchKeyPress}
           />
         </div>
 
@@ -282,9 +296,10 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="pl-main-content">
-        {/* Hero */}
+        {/* Hero & Courses Sections */}
         {view === "main" && (
           <>
+            {/* Hero */}
             <section className="pl-hero-section">
               <div className="pl-hero-content">
                 <h2 className="pl-hero-title">
@@ -325,9 +340,7 @@ export default function Dashboard() {
             <section className="pl-course-section" id="my-courses-section">
               <h3 className="pl-section-title">My Courses</h3>
               <div className="pl-course-grid">
-                {filteredMyCourses.length === 0 && (
-                  <p>No enrolled courses yet.</p>
-                )}
+                {filteredMyCourses.length === 0 && <p>No enrolled courses yet.</p>}
                 {filteredMyCourses
                   .slice(0, visibleMyCourses)
                   .map((course) => (
@@ -364,9 +377,7 @@ export default function Dashboard() {
               {visibleMyCourses < filteredMyCourses.length && (
                 <button
                   className="pl-show-more-btn"
-                  onClick={() =>
-                    setVisibleMyCourses((prev) => prev + 4)
-                  }
+                  onClick={() => setVisibleMyCourses((prev) => prev + 4)}
                 >
                   Show More
                 </button>
@@ -374,12 +385,14 @@ export default function Dashboard() {
             </section>
 
             {/* Explore More */}
-            <section className="pl-explore-section" id="all-courses-section">
+            <section
+              className="pl-explore-section"
+              id="all-courses-section"
+              ref={allCoursesRef}
+            >
               <h3 className="pl-section-title">Explore More Courses</h3>
               <div className="pl-course-grid">
-                {filteredAllCourses.length === 0 && (
-                  <p>No matching courses found.</p>
-                )}
+                {filteredAllCourses.length === 0 && <p>No matching courses found.</p>}
                 {filteredAllCourses
                   .slice(0, visibleAllCourses)
                   .map((course) => (
@@ -413,9 +426,7 @@ export default function Dashboard() {
               {visibleAllCourses < filteredAllCourses.length && (
                 <button
                   className="pl-show-more-btn"
-                  onClick={() =>
-                    setVisibleAllCourses((prev) => prev + 4)
-                  }
+                  onClick={() => setVisibleAllCourses((prev) => prev + 4)}
                 >
                   Show More
                 </button>
@@ -424,7 +435,7 @@ export default function Dashboard() {
           </>
         )}
 
-        {/* My Courses (Full) */}
+        {/* My Courses Full View */}
         {view === "myCourses" && (
           <section className="pl-course-section full-view">
             <div className="pl-my-courses-header">
@@ -452,9 +463,7 @@ export default function Dashboard() {
                         style={{ width: `${course.progress}%` }}
                       ></div>
                     </div>
-                    <p className="pl-progress-text">
-                      {course.progress}% Complete
-                    </p>
+                    <p className="pl-progress-text">{course.progress}% Complete</p>
                     <p className="pl-last-lesson">
                       Last lesson: <b>{course.lastLesson}</b>
                     </p>
