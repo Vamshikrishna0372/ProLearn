@@ -584,11 +584,11 @@ html.dark body {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 10px;
-  color: var(--text-color, #222);
+  color: var(--text-color, #ffffff);
 }
 
 .pl-highlight-text {
-  color: #f5faff; /* highlight username */
+  color: #efff5b; /* highlight username */
   font-weight: 700;
 }
 /* Sidebar Back Button (Top Right) */
